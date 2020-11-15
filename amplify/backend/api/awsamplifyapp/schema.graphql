@@ -1,0 +1,13 @@
+
+
+type Employee @model {
+  id: String!,
+  firstname: String!,
+  lastname: String!,
+  skills: [Skill]
+}
+
+type Skill @model {
+  id: String!,
+  name: String!
+}
