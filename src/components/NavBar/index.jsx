@@ -10,7 +10,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
+import BuildIcon from '@material-ui/icons/Build';
 import MenuIcon from '@material-ui/icons/Menu';
 import GroupIcon from '@material-ui/icons/Group';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -18,7 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Routes from '../../Routes';
 import { Link } from 'react-router-dom';
-
+import Logo from '../../logo.png'
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -45,6 +45,12 @@ const useStyles = makeStyles((theme) => ({
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
+  logoContainer: {
+    backgroundImage: `url(${Logo})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "contain",
+    backgroundPosition: "center",
+  },
   drawerPaper: {
     width: drawerWidth,
   },
@@ -66,7 +72,10 @@ function NavBar(props) {
 
   const drawer = (
     <div>
-      <div className={classes.toolbar} />
+      <div className={classes.toolbar} style={{ backgroundImage: `url(${Logo})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "contain",
+    backgroundPosition: "center",}} />
       <Divider />
       <List>
         <ListItem button component={Link} to="/">
@@ -77,6 +86,10 @@ function NavBar(props) {
           <ListItemIcon><GroupIcon /></ListItemIcon>
           <ListItemText primary="Employees" />
         </ListItem>
+        <ListItem button component={Link} to="/skills">
+          <ListItemIcon><BuildIcon /></ListItemIcon>
+          <ListItemText primary="Skills" />
+        </ListItem>
       </List>
     </div>
   );
@@ -85,7 +98,7 @@ function NavBar(props) {
 
   return (
     <div className={classes.root}>
-      {/* <CssBaseline /> */}
+      <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
@@ -135,7 +148,7 @@ function NavBar(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Routes />
+        {props.children}
       </main>
     </div>
   );

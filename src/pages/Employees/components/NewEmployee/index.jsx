@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation } from "react-apollo";
 import { createEmployee } from "../../../../graphql/mutations";
 import gql from "graphql-tag";
 import { useInput } from "../../../../hooks";
+import { Button } from "@material-ui/core";
+import SelectSkills from "../../../../components/SelectSkills";
 
 const NewEmployee = () => {
-    const [id, idInput] = useInput({ type: "text" });
-    const [firstname, firstnameInput] = useInput({ type: "text" });
-    const [lastname, lastnameInput] = useInput({ type: "text" });
-
+    const [id, idInput] = useInput({ type: "text", placeholder: "ID" });
+    const [firstname, firstnameInput] = useInput({ type: "text", placeholder: "First name" });
+    const [lastname, lastnameInput] = useInput({ type: "text", placeholder: "Last name" });
+    const [selectedSkills, setSelectedSkills] = useState([]);
+    
     const [
         newEmployee,
         { loading: newEmployeeLoading, error: newEmployeeError },
@@ -23,6 +26,7 @@ const NewEmployee = () => {
                     id,
                     firstname,
                     lastname,
+                    // skills: selectedSkills
                 },
             },
         });
@@ -36,8 +40,9 @@ const NewEmployee = () => {
             display: "flex", 
             flexDirection: "column", 
             alignItems: "center", 
-            justifyContent: "space-between",
-            backgroundColor: "#CDCDCD",
+            justifyContent: "space-around",
+            backgroundColor: "rgb(245, 245, 245)",
+            borderRadius: 4,
             padding: 15,
             margin: 10,
           }}>
@@ -48,15 +53,18 @@ const NewEmployee = () => {
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "space-between", 
-                        height: 125
                     }}
                 >
                     {idInput}
                     {firstnameInput}
                     {lastnameInput}
-                    <button onClick={(e) => handleSubmit(e)}>
+                    <SelectSkills 
+                      selectedSkills={selectedSkills}
+                      setSelectedSkills={setSelectedSkills}
+                    />
+                    <Button variant="contained" color="primary" onClick={(e) => handleSubmit(e)}>
                         New Employee
-                    </button>
+                    </Button>
                 </form>
             </div>
         </div>

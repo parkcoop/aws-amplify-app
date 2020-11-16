@@ -8,7 +8,6 @@ const Employees = () => {
 
     return (
         <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-start"}}>
-          <h1>Employee Console</h1>
           <div style={{display: "flex", alignItems: "flex-start"}}>
             <NewEmployee />
             <AllEmployees />
