@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "react-apollo";
-import { createEmployee } from "../../../../graphql/mutations";
+import { createEmployee, createEmployeeSkill } from "../../../../graphql/mutations";
 import gql from "graphql-tag";
 import { useInput } from "../../../../hooks";
 import { Button } from "@material-ui/core";
@@ -17,19 +17,43 @@ const NewEmployee = () => {
         { loading: newEmployeeLoading, error: newEmployeeError },
     ] = useMutation(gql(createEmployee));
 
-    const handleSubmit = (e) => {
+    const [
+        newEmployeeSkill,
+        { loading: newEmployeeSkillLoading, error: newEmployeeSkillError },
+    ] = useMutation(gql(createEmployeeSkill));
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(id, firstname, lastname);
-        newEmployee({
-            variables: {
+        try {
+          await newEmployee({
+              variables: {
+                  input: {
+                      id,
+                      firstname,
+                      lastname,
+                  },
+              },
+          });
+          console.log(selectedSkills)
+          selectedSkills.forEach(async skill => {
+            await newEmployeeSkill({
+              variables: {
                 input: {
+                  skill: skill,
+                  employee: {
                     id,
                     firstname,
                     lastname,
-                    // skills: selectedSkills
-                },
-            },
-        });
+                }
+                }
+              }
+            })
+          })
+        }
+        catch(err) {
+          console.log(err)
+        }
     };
 
     if (newEmployeeLoading) return <p>Loading...</p>;

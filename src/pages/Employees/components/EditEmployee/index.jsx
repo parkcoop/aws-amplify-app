@@ -113,11 +113,6 @@ console.log(skillsData)
                     ))}
                   </FormGroup>
                 </FormControl> */}
-                {employee?.skills?.map(skill => (
-                  <div>
-                    <p>{skill.name}</p>
-                  </div>
-                ))}
             </div>
         </div>
       </Fade>
